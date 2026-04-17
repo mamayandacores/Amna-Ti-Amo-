@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Amna — Il Mio Amore ❤️</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Poppins:wght@300;400;500;600&family=Great+Vibes&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --rose:#e8547a;--rose-deep:#c0325a;--blush:#f5c6d8;
+  --mauve:#9b4d7e;--lavender:#c9a0dc;--cream:#fff5f8;
+  --dark:#1a0a14;--dark2:#2d1025;
+  --glass:rgba(255,255,255,0.07);--gborder:rgba(255,255,255,0.15);
+  --fd:'Cormorant Garamond',serif;--fs:'Great Vibes',cursive;--fb:'Poppins',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:16px;}
+body{background:var(--dark);color:var(--cream);font-family:var(--fb);overflow:hidden;height:100vh;width:100vw;}
+img{display:block;max-width:100%;}
+button{cursor:pointer;font-family:var(--fb);}
+
+#particleCanvas{position:fixed;inset:0;z-index:0;pointer-events:none;}
+#floatingLayer{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden;}
+.float-item{position:absolute;top:-60px;animation:floatDown linear infinite;user-select:none;pointer-events:none;opacity:0;}
+@keyframes floatDown{
+  0%{transform:translateY(0) rotate(0deg);opacity:0;}
+  10%{opacity:.85;}90%{opacity:.6;}
+  100%{transform:translateY(110vh) rotate(360deg);opacity:0;}
+}
+
+.music-btn,.voice-btn{
+  position:fixed;z-index:200;
+  border:1px solid var(--gborder);background:var(--glass);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  color:var(--cream);border-radius:50px;
+  transition:background .3s,transform .3s,box-shadow .3s;
+}
+.music-btn{top:1.1rem;right:1.1rem;width:46px;height:46px;font-size:1.15rem;display:flex;align-items:center;justify-content:center;}
+.voice-btn{top:1.1rem;right:4.2rem;padding:.5rem 1rem;font-size:.78rem;display:flex;align-items:center;gap:.4rem;}
+.music-btn:hover,.voice-btn:hover{background:rgba(232,84,122,.28);border-color:var(--rose);transform:scale(1.06);box-shadow:0 0 18px rgba(232,84,122,.4);}
+
+.dot-nav{position:fixed;right:1.4rem;top:50%;transform:translateY(-50%);z-index:200;display:flex;flex-direction:column;gap:.7rem;}
+.dot{width:10px;height:10px;border-radius:50%;border:2px solid rgba(255,255,255,.35);background:transparent;padding:0;transition:background .3s,border-color .3s,transform .3s,box-shadow .3s;}
+.dot.active,.dot:hover{background:var(--rose);border-color:var(--rose);box-shadow:0 0 10px var(--rose);transform:scale(1.35);}
+
+.section{
+  position:fixed;inset:0;z-index:10;
+  display:flex;align-items:center;justify-content:center;
+  overflow-y:auto;overflow-x:hidden;
+  opacity:0;pointer-events:none;transform:translateY(28px);
+  transition:opacity .65s cubic-bezier(.25,.46,.45,.94),transform .65s cubic-bezier(.25,.46,.45,.94);
+}
+.section.active{opacity:1;pointer-events:all;transform:translateY(0);}
+.section.exit-up{opacity:0;transform:translateY(-35px);pointer-events:none;}
+.section-inner{width:100%;max-width:1080px;padding:2rem 2rem 6rem;position:relative;z-index:2;}
+
+.section-tag{font-size:.68rem;letter-spacing:.28em;text-transform:uppercase;color:var(--rose);margin-bottom:.9rem;}
+.section-title{font-family:var(--fd);font-size:clamp(2.4rem,5.5vw,4.8rem);font-weight:300;line-height:1.1;color:var(--cream);margin-bottom:1.4rem;}
+.section-title em,.proposal-question em{
+  font-style:italic;
+  background:linear-gradient(130deg,var(--rose),var(--lavender));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.section-title.centered{text-align:center;}
+.divider-line{width:55px;height:2px;background:linear-gradient(90deg,var(--rose),transparent);margin-bottom:1.8rem;border-radius:2px;}
+.divider-line.center{width:110px;background:linear-gradient(90deg,transparent,var(--rose),transparent);margin-left:auto;margin-right:auto;}
+
+.glass{background:var(--glass);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid var(--gborder);border-radius:18px;box-shadow:0 8px 32px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.08);}
+
+.nav-btn,.cta-btn{font-size:.82rem;letter-spacing:.1em;padding:.8rem 2rem;border-radius:50px;border:none;transition:background .3s,transform .3s,box-shadow .3s;font-weight:500;margin-top:1.8rem;}
+.nav-btn{background:transparent;color:var(--cream);border:1px solid rgba(255,255,255,.28);display:inline-block;}
+.nav-btn:hover{background:rgba(232,84,122,.18);border-color:var(--rose);transform:translateY(-2px);box-shadow:0 6px 22px rgba(232,84,122,.28);}
+.centered-btn{display:block;margin-left:auto;margin-right:auto;}
+
+/* HERO */
+#sec-home{text-align:center;}
+.hero-bg{
+  position:absolute;inset:0;z-index:0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 40%,rgba(155,77,126,.32) 0%,transparent 68%),
+    radial-gradient(ellipse 55% 75% at 18% 80%,rgba(107,45,107,.28) 0%,transparent 60%),
+    radial-gradient(ellipse 50% 45% at 82% 18%,rgba(232,84,122,.18) 0%,transparent 60%),
+    linear-gradient(160deg,#1a0a14 0%,#2d1025 50%,#1a0a14 100%);
+}
+.hero-inner{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding-bottom:4rem;text-align:center;}
+.hero-badge{font-size:.62rem;letter-spacing:.32em;text-transform:uppercase;color:var(--rose);margin-bottom:1.8rem;opacity:0;animation:fadeUp .9s .4s ease forwards;}
+.hero-title{font-family:var(--fd);font-weight:300;line-height:1;color:var(--cream);display:flex;flex-direction:column;align-items:center;gap:.08em;margin-bottom:1.4rem;}
+.hero-title .line-1{font-family:var(--fs);font-size:clamp(3.5rem,11vw,9rem);background:linear-gradient(130deg,#f5c6d8,#e8547a,#c9a0dc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;opacity:0;animation:fadeUp .9s .7s ease forwards;}
+.hero-title .line-2{font-size:clamp(2rem,6.5vw,5.5rem);font-style:italic;opacity:0;animation:fadeUp .9s 1s ease forwards;}
+.hero-title .heart-emoji{font-size:clamp(1.8rem,4.5vw,3.5rem);-webkit-text-fill-color:initial;opacity:0;animation:heartPop .6s 1.5s cubic-bezier(.34,1.56,.64,1) forwards;}
+.hero-subtitle{font-size:clamp(.88rem,1.8vw,1.1rem);color:rgba(245,198,216,.72);font-style:italic;max-width:460px;line-height:1.85;margin-bottom:2.2rem;opacity:0;animation:fadeUp .9s 1.3s ease forwards;}
+.cta-btn{background:linear-gradient(135deg,var(--rose-deep),var(--mauve));color:#fff;border:none;padding:1rem 2.6rem;font-size:.88rem;box-shadow:0 4px 24px rgba(232,84,122,.42);display:inline-flex;align-items:center;gap:.55rem;margin-top:0;opacity:0;animation:fadeUp .9s 1.6s ease forwards;}
+.cta-btn:hover{transform:translateY(-3px) scale(1.04);box-shadow:0 10px 32px rgba(232,84,122,.58);}
+.btn-arrow{display:inline-block;transition:transform .3s ease;}
+.cta-btn:hover .btn-arrow{transform:translateX(4px);}
+.scroll-hint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);color:rgba(255,255,255,.28);font-size:1.3rem;animation:bounce 2s ease infinite;z-index:3;pointer-events:none;}
+
+/* DESERVE */
+#sec-deserve{background:linear-gradient(150deg,#1a0a14 0%,#2d1025 60%,#1a0a14 100%);}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:3.5rem;align-items:center;min-height:100vh;}
+.romantic-line{font-size:clamp(.82rem,1.4vw,.97rem);color:rgba(245,198,216,.78);line-height:1.95;margin-bottom:1.1rem;padding-left:1rem;border-left:2px solid rgba(232,84,122,.38);}
+.image-block{position:relative;}
+.img-frame{position:relative;border-radius:22px;overflow:hidden;box-shadow:0 18px 55px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.07);transform:rotate(2deg);transition:transform .5s ease;}
+.img-frame:hover{transform:rotate(0deg) scale(1.02);}
+.img-frame img{width:100%;height:400px;object-fit:cover;filter:saturate(1.1) brightness(.82);}
+.img-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(26,10,20,.82) 0%,transparent 55%);display:flex;align-items:flex-end;padding:1.4rem;}
+.img-quote{font-family:var(--fs);font-size:1.35rem;color:var(--blush);line-height:1.4;}
+.floating-badge{position:absolute;top:-.9rem;right:-.9rem;background:linear-gradient(135deg,var(--rose),var(--mauve));color:#fff;font-size:.72rem;font-weight:600;letter-spacing:.07em;padding:.45rem 1rem;border-radius:50px;box-shadow:0 4px 18px rgba(232,84,122,.48);transform:rotate(8deg);}
+.fade-in-left{opacity:0;transform:translateX(-28px);transition:opacity .75s ease,transform .75s ease;}
+.fade-in-right{opacity:0;transform:translateX(28px);transition:opacity .75s ease,transform .75s ease;}
+.fade-in-left.visible,.fade-in-right.visible{opacity:1;transform:translateX(0);}
+
+/* FEELINGS */
+#sec-feelings{background:linear-gradient(160deg,#0f0613 0%,#1e0c1e 50%,#0f0613 100%);}
+.feelings-bg{position:absolute;inset:0;z-index:0;background:radial-gradient(ellipse 70% 50% at 50% 30%,rgba(107,45,107,.22) 0%,transparent 68%);}
+.feelings-inner{min-height:100vh;padding-top:3rem;}
+.story-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.3rem;margin-bottom:2rem;}
+.story-card{padding:1.8rem 1.4rem;text-align:center;opacity:0;transform:translateY(18px);transition:opacity .55s ease,transform .55s ease,box-shadow .35s ease;}
+.story-card.visible{opacity:1;transform:translateY(0);}
+.story-card:hover{transform:translateY(-5px);box-shadow:0 14px 36px rgba(232,84,122,.22);}
+.card-icon{font-size:1.9rem;margin-bottom:.7rem;display:block;}
+.story-card h3{font-family:var(--fd);font-size:1.15rem;font-weight:400;color:var(--blush);margin-bottom:.55rem;}
+.story-card p{font-size:.83rem;color:rgba(245,198,216,.62);line-height:1.82;}
+.feelings-letter{padding:2.2rem 2.8rem;text-align:center;margin-bottom:1.8rem;position:relative;overflow:hidden;}
+.feelings-letter::before{content:'"';font-family:var(--fd);font-size:7rem;color:rgba(232,84,122,.08);position:absolute;top:-.8rem;left:1.2rem;line-height:1;pointer-events:none;}
+.letter-text{font-family:var(--fd);font-style:italic;font-size:clamp(.92rem,1.7vw,1.12rem);line-height:2;color:rgba(245,198,216,.88);position:relative;z-index:1;}
+.letter-sig{display:block;font-family:var(--fs);font-size:1.75rem;color:var(--rose);margin-top:1.3rem;}
+
+/* RIZZ */
+#sec-rizz{background:linear-gradient(150deg,#1a0a14 0%,#2d1025 100%);}
+.rizz-inner{min-height:100vh;padding-top:3rem;}
+.rizz-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem;margin-bottom:1.8rem;}
+.rizz-card{padding:1.7rem 1.4rem;position:relative;overflow:hidden;opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease,box-shadow .35s ease;}
+.rizz-card.visible{opacity:1;transform:translateY(0);}
+.rizz-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(232,84,122,.07),transparent);opacity:0;transition:opacity .3s;border-radius:inherit;}
+.rizz-card:hover::before{opacity:1;}
+.rizz-card:hover{transform:translateY(-5px) scale(1.02);box-shadow:0 14px 36px rgba(232,84,122,.18);}
+.rizz-num{font-family:var(--fd);font-size:2.8rem;font-weight:300;color:rgba(232,84,122,.12);position:absolute;top:.4rem;right:.9rem;line-height:1;user-select:none;}
+.rizz-card p{font-family:var(--fd);font-style:italic;font-size:clamp(.92rem,1.55vw,1.08rem);line-height:1.82;color:rgba(245,198,216,.83);position:relative;z-index:1;}
+
+/* PROPOSAL */
+#sec-proposal{text-align:center;}
+.proposal-bg{position:absolute;inset:0;z-index:0;background:radial-gradient(ellipse 85% 65% at 50% 50%,rgba(192,50,90,.18) 0%,transparent 68%),linear-gradient(160deg,#1a0a14 0%,#2d1025 50%,#1a0a14 100%);}
+.proposal-inner{position:relative;z-index:2;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.proposal-question{font-family:var(--fd);font-weight:300;font-size:clamp(2.8rem,7.5vw,6rem);line-height:1.06;color:var(--cream);margin-bottom:1.4rem;text-align:center;}
+.proposal-letter{max-width:600px;padding:1.8rem 2.4rem;margin-bottom:2.2rem;font-family:var(--fd);font-style:italic;font-size:clamp(.88rem,1.55vw,1.03rem);line-height:2;color:rgba(245,198,216,.83);text-align:left;}
+.proposal-buttons{display:flex;gap:1.3rem;align-items:center;justify-content:center;flex-wrap:wrap;}
+.yes-btn,.no-btn{font-weight:600;font-size:1.05rem;padding:.95rem 2.8rem;border-radius:50px;border:none;letter-spacing:.04em;}
+.yes-btn{background:linear-gradient(135deg,var(--rose-deep),var(--mauve));color:#fff;box-shadow:0 5px 26px rgba(232,84,122,.48);animation:pulseGlow 2.2s ease infinite;transition:transform .3s,box-shadow .3s;}
+.yes-btn:hover{transform:scale(1.08);box-shadow:0 10px 38px rgba(232,84,122,.68);}
+.no-btn{background:transparent;color:rgba(255,255,255,.38);border:1px solid rgba(255,255,255,.14);position:relative;transition:top .25s,left .25s;}
+
+.celebration{display:none;position:fixed;inset:0;z-index:300;flex-direction:column;align-items:center;justify-content:center;background:radial-gradient(ellipse at center,rgba(192,50,90,.28) 0%,rgba(26,10,20,.92) 100%);animation:fadeIn .8s ease forwards;}
+.celebration-inner{text-align:center;position:relative;z-index:2;}
+.celeb-emoji{font-size:4.5rem;display:block;margin-bottom:1rem;animation:heartPop .5s cubic-bezier(.34,1.56,.64,1) forwards;}
+.celeb-title{font-family:var(--fs);font-size:clamp(2.4rem,6.5vw,4.8rem);color:var(--blush);margin-bottom:.7rem;}
+.celeb-sub{font-size:1.05rem;color:rgba(245,198,216,.78);}
+.celeb-hearts{position:fixed;inset:0;pointer-events:none;z-index:1;}
+.burst-heart{position:fixed;pointer-events:none;animation:burstHeart 1.6s ease-out forwards;}
+
+.signature{position:fixed;bottom:1.4rem;left:50%;transform:translateX(-50%);z-index:150;font-family:var(--fs);font-size:1.35rem;color:rgba(232,84,122,.65);white-space:nowrap;pointer-events:none;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+@keyframes heartPop{from{transform:scale(0) rotate(-12deg);opacity:0;}to{transform:scale(1) rotate(0);opacity:1;}}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(8px);}}
+@keyframes pulseGlow{0%,100%{box-shadow:0 5px 26px rgba(232,84,122,.48);}50%{box-shadow:0 5px 44px rgba(232,84,122,.82);}}
+@keyframes burstHeart{0%{transform:translate(0,0) scale(0);opacity:1;}70%{opacity:.85;}100%{transform:translate(var(--tx),var(--ty)) scale(1.4);opacity:0;}}
+
+@media(max-width:900px){
+  .two-col{grid-template-columns:1fr;gap:2.2rem;}
+  .story-cards{grid-template-columns:1fr;gap:1rem;}
+  .rizz-grid{grid-template-columns:1fr 1fr;}
+  .img-frame img{height:260px;}
+  .feelings-letter{padding:1.5rem 1.6rem;}
+}
+@media(max-width:600px){
+  .rizz-grid{grid-template-columns:1fr;}
+  .yes-btn,.no-btn{padding:.85rem 1.8rem;font-size:.96rem;}
+  .dot-nav{right:.7rem;}
+  .voice-btn .voice-label{display:none;}
+  .voice-btn{width:46px;justify-content:center;padding:0;}
+  .two-col{padding-top:4.5rem;}
+}
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:rgba(232,84,122,.35);border-radius:8px;}
+</style>
+</head>
+<body>
+
+<canvas id="particleCanvas"></canvas>
+<div id="floatingLayer" aria-hidden="true"></div>
+<audio id="bgMusic" loop preload="none">
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/10/audio_c8c8a73467.mp3" type="audio/mpeg"/>
+</audio>
+
+<button class="music-btn" id="btnMusicToggle"><span id="musicIcon">🎵</span></button>
+<button class="voice-btn" id="btnVoice"><span>🔊</span><span class="voice-label">Ascolta</span></button>
+
+<!-- SECTION 1 — HERO -->
+<section class="section active" id="sec-home">
+  <div class="hero-bg"></div>
+  <div class="section-inner hero-inner">
+    <div class="hero-badge">✦ Un messaggio dal cuore ✦</div>
+    <h1 class="hero-title">
+      <span class="line-1">Amna,</span>
+      <span class="line-2">sei il mio amore</span>
+      <span class="heart-emoji">❤️</span>
+    </h1>
+    <p class="hero-subtitle">"Ogni giorno che passa, il mio cuore ti cerca ancora di più."</p>
+    <button class="cta-btn" id="btnStart">Inizia il viaggio <span class="btn-arrow">→</span></button>
+  </div>
+  <div class="scroll-hint">↓</div>
+</section>
+
+<!-- SECTION 2 — DESERVE -->
+<section class="section" id="sec-deserve">
+  <div class="section-inner two-col">
+    <div class="text-block fade-in-left">
+      <div class="section-tag">✦ Per te ✦</div>
+      <h2 class="section-title">Tu meriti<br/><em>tutto</em></h2>
+      <div class="divider-line"></div>
+      <p class="romantic-line">"Tu meriti tutto nella vita — ogni sogno, ogni alba, ogni momento di gioia."</p>
+      <p class="romantic-line">"Il tuo sorriso rende il mio mondo perfetto, come la luna illumina la notte più buia."</p>
+      <p class="romantic-line">"Sei la bellezza che non sapevo di cercare, finché non ti ho trovata."</p>
+      <button class="nav-btn" id="btnToFeelings">Continua ↓</button>
+    </div>
+    <div class="image-block fade-in-right">
+      <div class="img-frame">
+        <img src="https://images.unsplash.com/photo-1518621736915-f3b1c41bfd00?w=600&q=80" alt="Fiori romantici" loading="lazy"/>
+        <div class="img-overlay"><span class="img-quote">"La tua presenza è il mio paradiso"</span></div>
+      </div>
+      <div class="floating-badge">🌸 Per Amna</div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3 — FEELINGS -->
+<section class="section" id="sec-feelings">
+  <div class="feelings-bg"></div>
+  <div class="section-inner feelings-inner">
+    <div class="section-tag">✦ I miei sentimenti ✦</div>
+    <h2 class="section-title centered">Dal profondo<br/><em>del mio cuore</em></h2>
+    <div class="divider-line center"></div>
+    <div class="story-cards">
+      <div class="story-card glass" data-delay="0">
+        <div class="card-icon">🌍</div>
+        <h3>Italia ↔ Pakistan</h3>
+        <p>Due paesi, due cuori, una sola anima. La distanza non è un ostacolo — è la prova di quanto sia reale quello che sento per te.</p>
+      </div>
+      <div class="story-card glass" data-delay="150">
+        <div class="card-icon">⭐</div>
+        <h3>Ogni Notte</h3>
+        <p>Quando guardo le stelle, so che le stai guardando anche tu. Quella connessione silenziosa mi scalda l'anima ogni sera.</p>
+      </div>
+      <div class="story-card glass" data-delay="300">
+        <div class="card-icon">💫</div>
+        <h3>Il Futuro</h3>
+        <p>Sogno un futuro dove la distanza è solo un ricordo, e tu sei accanto a me — finalmente, per sempre.</p>
+      </div>
+    </div>
+    <div class="feelings-letter glass">
+      <p class="letter-text">"Amna, non esistono parole abbastanza grandi per descrivere quello che provo. Sei entrata nella mia vita come una luce silenziosa, e ora non riesco più a immaginare il buio senza di te. La distanza fa male, sì — ma ogni chilometro che ci separa è un chilometro che voglio attraversare per arrivare da te."</p>
+      <span class="letter-sig">— Abdullah</span>
+    </div>
+    <button class="nav-btn centered-btn" id="btnToRizz">Continua ↓</button>
+  </div>
+</section>
+
+<!-- SECTION 4 — RIZZ -->
+<section class="section" id="sec-rizz">
+  <div class="section-inner rizz-inner">
+    <div class="section-tag">✦ Solo per te ✦</div>
+    <h2 class="section-title centered">Parole<br/><em>dall'anima</em></h2>
+    <div class="divider-line center"></div>
+    <div class="rizz-grid">
+      <div class="rizz-card glass" data-delay="0"><span class="rizz-num">01</span><p>"Sei il motivo per cui sorrido senza motivo."</p></div>
+      <div class="rizz-card glass" data-delay="100"><span class="rizz-num">02</span><p>"Il mio cuore ha scelto te — prima ancora che lo facessi io."</p></div>
+      <div class="rizz-card glass" data-delay="200"><span class="rizz-num">03</span><p>"Se esiste perfezione in questo mondo, sei tu."</p></div>
+      <div class="rizz-card glass" data-delay="300"><span class="rizz-num">04</span><p>"Ogni volta che penso a te, il mondo diventa un posto migliore."</p></div>
+      <div class="rizz-card glass" data-delay="400"><span class="rizz-num">05</span><p>"Sei il mio posto preferito, ovunque tu sia."</p></div>
+      <div class="rizz-card glass" data-delay="500"><span class="rizz-num">06</span><p>"Con te, anche il silenzio sa di casa."</p></div>
+    </div>
+    <button class="nav-btn centered-btn" id="btnToProposal">La domanda finale ↓</button>
+  </div>
+</section>
+
+<!-- SECTION 5 — PROPOSAL -->
+<section class="section" id="sec-proposal">
+  <div class="proposal-bg"></div>
+  <div class="section-inner proposal-inner">
+    <div id="proposalContent">
+      <div class="section-tag">✦ Il momento ✦</div>
+      <h2 class="proposal-question">Vuoi essere<br/><em>mia?</em> ❤️</h2>
+      <div class="divider-line center"></div>
+      <div class="proposal-letter glass">
+        <p>"Amna, dal primo momento in cui ho sentito la tua presenza nella mia vita, ho capito che sei speciale. Non cerco la perfezione — cerco te, con ogni tua sfumatura, ogni tuo sorriso, ogni tua lacrima. Voglio essere il tuo rifugio, il tuo complice, il tuo amore. Attraverserei ogni oceano, ogni confine, ogni distanza — solo per stare accanto a te."</p>
+      </div>
+      <div class="proposal-buttons">
+        <button class="yes-btn" id="btnYes">Sì, voglio ❤️</button>
+        <button class="no-btn" id="btnNo">No 😢</button>
+      </div>
+    </div>
+    <div class="celebration" id="celebration">
+      <div class="celebration-inner">
+        <div class="celeb-emoji">🎉</div>
+        <h2 class="celeb-title">Sei la mia risposta!</h2>
+        <p class="celeb-sub">Il mio cuore esplode di felicità. Grazie, Amna. 💖</p>
+      </div>
+      <div class="celeb-hearts" id="celebHearts"></div>
+    </div>
+  </div>
+  <div class="signature">Da Abdullah, con tutto il cuore 💖</div>
+</section>
+
+<nav class="dot-nav">
+  <button class="dot active" data-i="0"></button>
+  <button class="dot" data-i="1"></button>
+  <button class="dot" data-i="2"></button>
+  <button class="dot" data-i="3"></button>
+  <button class="dot" data-i="4"></button>
+</nav>
+
+<script>
+(function(){
+'use strict';
+var FLOWERS=['🌸','🌺','🌷','🌹','💐','🌼'];
+var HEARTS=['❤️','🩷','💕','💗','💖','💝'];
+var EMOJIS=FLOWERS.concat(HEARTS);
+var SEC=['sec-home','sec-deserve','sec-feelings','sec-rizz','sec-proposal'];
+var idx=0,busy=false;
+
+/* CANVAS */
+var cv=document.getElementById('particleCanvas');
+var ct=cv.getContext('2d');
+var pts=[];
+function rsz(){cv.width=window.innerWidth;cv.height=window.innerHeight;}
+function mkP(ini){return{x:Math.random()*cv.width,y:ini?Math.random()*cv.height:cv.height+10,r:Math.random()*2.2+.5,vx:(Math.random()-.5)*.36,vy:-(Math.random()*.5+.18),a:Math.random()*.45+.1,c:Math.random()>.5?'hsl('+(330+Math.random()*28)+',78%,'+(60+Math.random()*18)+'%)':'hsl('+(270+Math.random()*28)+',58%,'+(60+Math.random()*18)+'%)'};} 
+function tkP(p){p.x+=p.vx;p.y+=p.vy;p.a-=.0007;if(p.y<-10||p.a<=0){var n=mkP(false);p.x=n.x;p.y=n.y;p.r=n.r;p.vx=n.vx;p.vy=n.vy;p.a=n.a;p.c=n.c;}}
+function drP(p){ct.save();ct.globalAlpha=Math.max(0,p.a);ct.fillStyle=p.c;ct.shadowColor=p.c;ct.shadowBlur=4;ct.beginPath();ct.arc(p.x,p.y,p.r,0,Math.PI*2);ct.fill();ct.restore();}
+function initP(){rsz();pts=[];for(var i=0;i<110;i++)pts.push(mkP(true));}
+function loopP(){ct.clearRect(0,0,cv.width,cv.height);for(var i=0;i<pts.length;i++){tkP(pts[i]);drP(pts[i]);}requestAnimationFrame(loopP);}
+
+/* FLOATS */
+var fl=document.getElementById('floatingLayer');
+function spwn(){var el=document.createElement('span');el.className='float-item';el.textContent=EMOJIS[Math.floor(Math.random()*EMOJIS.length)];var d=7+Math.random()*8,dl=Math.random()*2.5,sz=.9+Math.random()*1.1;el.style.left=(Math.random()*100)+'vw';el.style.fontSize=sz+'rem';el.style.animationDuration=d+'s';el.style.animationDelay=dl+'s';fl.appendChild(el);setTimeout(function(){el.remove();},(d+dl+1.5)*1000);}
+function startSpwn(){spwn();setInterval(spwn,600);}
+
+/* NAV */
+function goTo(ti){
+  if(busy||ti<0||ti>=SEC.length||ti===idx)return;
+  busy=true;
+  var cur=document.getElementById(SEC[idx]),tgt=document.getElementById(SEC[ti]);
+  cur.classList.add('exit-up');
+  setTimeout(function(){
+    cur.classList.remove('active','exit-up');
+    tgt.classList.add('active');
+    idx=ti;syncDots();entr(tgt);
+    setTimeout(function(){busy=false;},750);
+  },480);
+}
+function syncDots(){document.querySelectorAll('.dot').forEach(function(d,i){d.classList.toggle('active',i===idx);});}
+function entr(sec){
+  sec.querySelectorAll('.fade-in-left,.fade-in-right').forEach(function(el,i){setTimeout(function(){el.classList.add('visible');},i*180+100);});
+  sec.querySelectorAll('.story-card,.rizz-card').forEach(function(c){setTimeout(function(){c.classList.add('visible');},parseInt(c.getAttribute('data-delay')||0)+200);});
+}
+
+function wb(id,ti){var b=document.getElementById(id);if(b)b.addEventListener('click',function(){goTo(ti);});}
+wb('btnStart',1);wb('btnToFeelings',2);wb('btnToRizz',3);wb('btnToProposal',4);
+document.querySelectorAll('.dot').forEach(function(d){d.addEventListener('click',function(){goTo(parseInt(d.getAttribute('data-i')));});});
+
+var wt=null;
+window.addEventListener('wheel',function(e){if(busy)return;clearTimeout(wt);wt=setTimeout(function(){goTo(idx+(e.deltaY>0?1:-1));},60);},{passive:true});
+var ty0=0;
+window.addEventListener('touchstart',function(e){ty0=e.touches[0].clientY;},{passive:true});
+window.addEventListener('touchend',function(e){if(busy)return;var d=ty0-e.changedTouches[0].clientY;if(Math.abs(d)<50)return;goTo(idx+(d>0?1:-1));},{passive:true});
+
+/* MUSIC */
+var bgA=document.getElementById('bgMusic');
+var mIc=document.getElementById('musicIcon');
+var mBt=document.getElementById('btnMusicToggle');
+var mOn=false;
+function tryPlay(){if(mOn)return;bgA.volume=.18;bgA.play().then(function(){mOn=true;mIc.textContent='🎵';}).catch(function(){});}
+document.addEventListener('click',tryPlay,{once:true});
+mBt.addEventListener('click',function(e){e.stopPropagation();if(mOn){bgA.pause();mOn=false;mIc.textContent='🔇';}else{bgA.volume=.18;bgA.play().then(function(){mOn=true;mIc.textContent='🎵';}).catch(function(){});}});
+
+/* VOICE */
+var vBt=document.getElementById('btnVoice');
+var vMs=['Amna… sei il mio amore.','Tu meriti tutto nella vita.','Il mio cuore ti appartiene per sempre.'];
+if(window.speechSynthesis)window.speechSynthesis.onvoiceschanged=function(){window.speechSynthesis.getVoices();};
+function spk(txt){if(!window.speechSynthesis)return null;window.speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(txt);u.lang='it-IT';u.rate=.86;u.pitch=1;u.volume=1;var vs=window.speechSynthesis.getVoices();for(var i=0;i<vs.length;i++){if(vs[i].lang.startsWith('it')){u.voice=vs[i];break;}}window.speechSynthesis.speak(u);return u;}
+vBt.addEventListener('click',function(){if(!window.speechSynthesis){alert('Sintesi vocale non supportata.');return;}vBt.style.boxShadow='0 0 20px rgba(232,84,122,.7)';var u=spk(vMs[Math.floor(Math.random()*vMs.length)]);if(u)u.onend=function(){vBt.style.boxShadow='';};});
+
+/* YES / NO */
+var yBt=document.getElementById('btnYes');
+var nBt=document.getElementById('btnNo');
+yBt.addEventListener('click',function(){
+  var pc=document.getElementById('proposalContent'),cel=document.getElementById('celebration'),ch=document.getElementById('celebHearts');
+  pc.style.transition='opacity .5s,transform .5s';pc.style.opacity='0';pc.style.transform='scale(.93)';
+  setTimeout(function(){pc.style.display='none';cel.style.display='flex';brst(ch,0);setTimeout(function(){spk('Sei la mia risposta, Amna. Ti amo!');},700);},500);
+});
+function runAway(){var vw=window.innerWidth-160,vh=window.innerHeight-70;nBt.style.position='fixed';nBt.style.left=(Math.floor(Math.random()*vw)+40)+'px';nBt.style.top=(Math.floor(Math.random()*vh)+15)+'px';nBt.style.zIndex='9999';nBt.style.transition='top .28s,left .28s';}
+nBt.addEventListener('mouseover',runAway);
+nBt.addEventListener('click',runAway);
+
+/* CONFETTI */
+function brst(cont,cnt){
+  if(cnt>=5)return;
+  var bcx=window.innerWidth/2,bcy=window.innerHeight/2;
+  for(var i=0;i<55;i++){var h=document.createElement('span');h.className='burst-heart';h.textContent=HEARTS[Math.floor(Math.random()*HEARTS.length)];var ang=Math.random()*Math.PI*2,dist=130+Math.random()*320;h.style.cssText='left:'+bcx+'px;top:'+bcy+'px;--tx:'+(Math.cos(ang)*dist)+'px;--ty:'+(Math.sin(ang)*dist-90)+'px;animation-delay:'+(Math.random()*.55).toFixed(2)+'s;font-size:'+(1+Math.random()*1.4).toFixed(2)+'rem;';cont.appendChild(h);}
+  setTimeout(function(){brst(cont,cnt+1);},2000);
+}
+
+/* CURSOR TRAIL */
+var trl=[],mx=0,my=0;
+for(var ti=0;ti<10;ti++){var td=document.createElement('div');td.style.cssText='position:fixed;width:'+(6-ti*.38).toFixed(1)+'px;height:'+(6-ti*.38).toFixed(1)+'px;border-radius:50%;background:rgba(232,84,122,'+(0.5-ti*.04).toFixed(2)+');pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:screen;left:-999px;top:-999px;';document.body.appendChild(td);trl.push({el:td,x:-999,y:-999});}
+document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;});
+function loopTrl(){var x=mx,y=my;for(var i=0;i<trl.length;i++){var f=Math.max(.05,.38-i*.028);trl[i].x+=(x-trl[i].x)*f;trl[i].y+=(y-trl[i].y)*f;trl[i].el.style.left=trl[i].x+'px';trl[i].el.style.top=trl[i].y+'px';x=trl[i].x;y=trl[i].y;}requestAnimationFrame(loopTrl);}
+
+window.addEventListener('resize',rsz);
+
+/* INIT */
+initP();loopP();startSpwn();loopTrl();
+setTimeout(function(){entr(document.getElementById('sec-home'));},250);
+})();
+</script>
+</body>
+</html>
