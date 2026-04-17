@@ -1,0 +1,93 @@
+<!DOCTYPE html><html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amna ❤️ Abdullah</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet"><style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{overflow:hidden;background:linear-gradient(135deg,#ff758c,#ff7eb3,#a18cd1,#ffb199);color:#fff;}
+section{height:100vh;display:flex;justify-content:center;align-items:center;flex-direction:column;text-align:center;padding:20px;position:absolute;width:100%;top:0;left:0;opacity:0;transition:1s;}
+section.active{opacity:1;z-index:2;}
+
+h1{font-size:3.5rem;margin-bottom:20px;}
+h2{font-size:2rem;margin-bottom:15px;}
+p{font-size:1.3rem;max-width:750px;margin:10px auto;}
+
+.btn{margin-top:25px;padding:12px 30px;border:none;border-radius:30px;background:#fff;color:#ff4e8a;font-weight:bold;cursor:pointer;}
+
+.heart{font-size:3rem;animation:beat 1s infinite;}
+@keyframes beat{50%{transform:scale(1.3);}}
+
+/* Flower Rain */
+.flower{position:fixed;top:-50px;font-size:22px;animation:fall linear infinite;}
+@keyframes fall{to{transform:translateY(110vh) rotate(360deg);}}
+
+/* Image style */
+.img-box{margin-top:20px;}
+.img-box img{width:220px;border-radius:20px;box-shadow:0 10px 30px rgba(0,0,0,0.3);}
+
+/* Glow text */
+.glow{animation:glow 2s infinite alternate;}
+@keyframes glow{from{text-shadow:0 0 10px #fff;}to{text-shadow:0 0 30px #ff4e8a;}}
+
+</style></head><body><!-- FLOWERS --><script>
+for(let i=0;i<50;i++){
+ let f=document.createElement("div");
+ f.className="flower";
+ f.innerHTML="🌸";
+ f.style.left=Math.random()*100+"%";
+ f.style.animationDuration=(3+Math.random()*5)+"s";
+ f.style.opacity=Math.random();
+ document.body.appendChild(f);
+}
+</script><!-- BACKGROUND MUSIC --><audio autoplay loop>
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+</audio><!-- PAGE 1 --><section class="active" id="p1">
+<h1 class="glow">Amna ❤️</h1>
+<h2>Sei il mio mondo</h2>
+<p>La tua reazione rende ogni mio giorno bellissimo.</p>
+<div class="heart">❤️</div>
+<button class="btn" onclick="next(2)">Inizia</button>
+</section><!-- PAGE 2 --><section id="p2">
+<h1>Sei speciale 🌸</h1>
+<p>Tu meriti tutto… amore infinito e felicità pura.</p>
+<div class="img-box">
+<img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7"/>
+</div>
+<button class="btn" onclick="next(3)">Avanti</button>
+</section><!-- PAGE 3 --><section id="p3">
+<h1>Il mio cuore 💌</h1>
+<p>Ogni giorno penso a te… sempre.</p>
+<p>La distanza non cambia nulla.</p>
+<div class="img-box">
+<img src="https://images.unsplash.com/photo-1529634898452-1c2e3a49b3b0"/>
+</div>
+<button class="btn" onclick="next(4)">Continua</button>
+</section><!-- PAGE 4 RIZZ --><section id="p4">
+<h1>Rizz 😏</h1>
+<p>Sei la definizione perfetta di bellezza.</p>
+<p>Il mio cuore ha già scelto te.</p>
+<p>Sei il motivo dei miei sorrisi.</p>
+<div class="img-box">
+<img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee"/>
+</div>
+<button class="btn" onclick="next(5)">Ultimo</button>
+</section><!-- FINAL --><section id="p5">
+<h1 class="glow">Vuoi essere mia? ❤️</h1>
+<p>Amna… vuoi iniziare questa storia con me?</p>
+<p>Da Abdullah, con amore infinito 💖</p>
+<div class="heart">❤️</div>
+<button class="btn" onclick="speakLove()">🎤 Play Voice</button>
+</section><script>
+function next(n){
+ document.querySelectorAll('section').forEach(p=>p.classList.remove('active'));
+ document.getElementById('p'+n).classList.add('active');
+}
+
+function speakLove(){
+ let msg=new SpeechSynthesisUtterance("Amna... you are my love. You are my happiness.");
+ msg.lang="en-US";
+ speechSynthesis.speak(msg);
+}
+</script></body>
+    </html>
